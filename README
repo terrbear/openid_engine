@@ -32,3 +32,12 @@ have validations on your user model, upon account creation, if the user model
 isn't valid, the user will be redirected to edit_user_url.
 
 I hope to get both of those assumptions moved to a yaml or something soon.
+
+Credits:
+This is actually mostly a repackaging/following of the steps from the actual
+open_id_authentication plugin, found here: 
+	http://github.com/rails/open_id_authentication/tree/master
+
+I didn't know anything about Rails engines until I heard a talk by Mike
+Perham, whose github profile you can find here:
+	http://github.com/mperham
