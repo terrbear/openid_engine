@@ -11,10 +11,13 @@ class <%= class_name %> < ActiveRecord::Migration
       t.string :server_url, :null => true
       t.string :salt, :null => false
     end
+
+    add_column :users, :identity_url, :string
   end
 
   def self.down
     drop_table :open_id_authentication_associations
     drop_table :open_id_authentication_nonces
+    remove_column :users, :identity_url
   end
 end
