@@ -9,7 +9,7 @@ module AuthenticatedSystem
     # Accesses the current user from the session.
     # Future calls avoid the database because nil is not equal to false.
     def current_user
-      @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+      @current_user ||= (login_from_session || login_from_basic_auth) unless @current_user == false
     end
 
     # Store the given user id in the session.
@@ -122,17 +122,6 @@ module AuthenticatedSystem
     #
     # Sign Out
     #
-
-    # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
-    # for the paranoid: we _should_ be storing user_token = hash(cookie_token, request IP)
-    def login_from_cookie
-      user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
-      if user && user.remember_token?
-        self.current_user = user
-        handle_remember_cookie! false # freshen cookie token (keeping date)
-        self.current_user
-      end
-    end
 
     # This is ususally what you want; resetting the session willy-nilly wreaks
     # havoc with forgery protection, and is only strictly necessary on login.

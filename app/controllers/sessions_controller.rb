@@ -13,10 +13,9 @@ protected
   def open_id_authentication(openid)
     authenticate_with_open_id(openid) do |result, identity_url, registration|
 	    if result.successful?
-	      if @current_user = User.find_by_identity_url(identity_url)
-	        successful_login
-	      elsif (@current_user = User.new(:identity_url => identity_url)) && @current_user.save(false)
-          successful_login(true)
+	      if @current_user = User.find_by_identity_url(identity_url) || User.new(:identity_url => identity_url)
+          @current_user.save(false)
+	        successful_login(!@current_user.valid?)
         else
           failed_login "Could not log you in at this time."
 	      end

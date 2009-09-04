@@ -15,4 +15,5 @@ end
 config.to_prepare do
   OpenID::Util.logger = Rails.logger
   ActionController::Base.send :include, OpenIdAuthentication
+  ActionController::Base.send :include, AuthenticatedSystem
 end
